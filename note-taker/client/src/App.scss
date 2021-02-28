@@ -1,0 +1,62 @@
+html, body{
+  height: 100%;
+  width: 100%;
+
+  padding: 0;
+  margin: 0;
+}
+
+#root, .App {
+  height: 100%;
+  width: 100%;
+}
+
+.file-list {
+  width: 30%;
+  height: 100%;
+
+  min-width: 200px;
+  max-width: 400px;
+  
+  background-color: rgb(221, 221, 221);
+
+  display: flex;
+  flex-direction: column;
+
+  border-right: solid rgb(146, 146, 146) 1px;
+
+}
+
+.new-note {
+  width: 100%;
+  border-style: none;
+  background-color: green;
+  height: 25px;
+}
+
+.new-note:hover {
+  background-color: grey;
+}
+
+input {
+  width: 100%;
+  height: 25px;
+  padding: 0;
+  margin: 0;
+  border: none;
+}
+
+.list-item {
+  width: 100%;
+  display: flex;
+
+  justify-content: space-between;
+}
+
+.list-item > p{
+  padding: 5px;
+}
+
+.list-item:hover {
+  background-color: grey;
+}
