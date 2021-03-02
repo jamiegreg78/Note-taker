@@ -11,6 +11,14 @@ html, body{
   width: 100%;
 }
 
+.App {
+  display: flex;
+}
+
+button, .list-item {
+  cursor: pointer;
+}
+
 .file-list {
   width: 30%;
   height: 100%;
@@ -59,4 +67,17 @@ input {
 
 .list-item:hover {
   background-color: grey;
+}
+
+.editor-container {
+  width: 100%;
+  display: flex;
+}
+
+.editor {
+  width: 50%;
+  height: 100%;
+
+  box-sizing: border-box;
+  resize: none;
 }

@@ -6,9 +6,9 @@ export default function List(props) {
 
     return (
         <div className="file-list">
-            <NewNote saveNote={props.saveNote}/>
+            <NewNote createNote={props.createNote}/>
             { props.notes.map(item => {
-                return <ListItem note={item} key={item.id} deleteNote={props.deleteNote}/>
+                return <ListItem note={item} key={item.id} deleteNote={props.deleteNote} selectNote={props.selectNote}/>
             })}
         </div>
     )

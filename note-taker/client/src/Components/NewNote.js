@@ -12,7 +12,7 @@ export default function NewNote(props) {
         event.preventDefault();
         if (newTitle !== "") {
             setNewTitle("");
-            props.saveNote(newTitle);
+            props.createNote(newTitle);
         } else {
             alert("Title cannot be blank")
         }
