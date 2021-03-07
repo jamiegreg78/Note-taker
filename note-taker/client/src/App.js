@@ -5,8 +5,8 @@ import Editor from './Components/Editor';
 
 function App() {
   const [notes, setNotes] = useState([]);
-  const [selectedNote, setSelectedNote] = useState(false);
-  const [noteIndex, setNoteIndex] = useState(0);
+  const [isNoteSelected, setIsNoteSelected] = useState(false);
+  const [selectedNote, setSelectedNote] = useState({});
   const [loaded, setLoaded] = useState(false);
 
   // Load from local storage
@@ -40,20 +40,43 @@ function App() {
   // Removes the note with the ID given in props
   const deleteNote = (noteId) => {
     if (window.confirm("Are you sure you wish to delete this note? ")) {
-      setSelectedNote(false);
-      setNotes(notes.filter(item => item.id !== noteId));
+      // If deleting currently selected note - deselect it first
+      if (selectedNote.id === noteId) {
+        deselectNote();
+        setNotes(notes.filter(item => item.id !== noteId));
+      } else {
+        setNotes(notes.filter(item => item.id !== noteId));
+      }
+
     }
   }
 
   // Select note - gets index of item with matching id
   const selectNote = (noteId) => {
-    setNoteIndex(notes.findIndex(item => item.id === noteId));
-    setSelectedNote(true);
+    // Deselects current note before selecting another one
+    if (isNoteSelected === true) {
+      deselectNote();
+    }
+    setSelectedNote(notes[notes.findIndex(item => item.id === noteId)]);
+    setIsNoteSelected(true);
+  }
+
+  const deselectNote = () => {
+    setSelectedNote({});
+    setIsNoteSelected(false);
   }
 
   // Saves to the state array
-  const saveNote = () => {
+  const saveNote = (noteId, content) => {
 
+    // Either updates the desired object or returns the whole object unmodified
+    setNotes(notes.map(item => {
+      if (item.id === noteId) {
+        return { ...item, content: content }
+      } else {
+        return item;
+      }
+    }));
   }
 
   // Saves the notes to localStorage
@@ -61,13 +84,17 @@ function App() {
     localStorage.setItem("notes", JSON.stringify({ "notes": notes }));
   }
 
-
-
+ // {isNoteSelected === true && <Editor note={selectedNote} saveNote={saveNote} />}
   if (loaded === true) {
     return (
       <div className="App">
-        <List notes={notes} createNote={createNote} deleteNote={deleteNote} selectNote={selectNote} />
-        {selectedNote === true && <Editor note={notes[noteIndex]} />}
+        <List
+          notes={notes}
+          createNote={createNote}
+          deleteNote={deleteNote}
+          selectNote={selectNote} />
+        {isNoteSelected ? <Editor note={selectedNote} saveNote={saveNote} isNoteSelected={isNoteSelected}/> : null}
+
 
       </div>
     );

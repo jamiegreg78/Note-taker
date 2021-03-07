@@ -13,8 +13,9 @@ export default function ListItem(props) {
         <div className="list-item" onClick={() => props.selectNote(props.note.id)}>
             <div className="item-overview">
                 <p>{props.note.title}</p>
+                <p className="content-preview">{props.note.content}</p>
             </div>
-            <button onClick={clickDelete}>Delete</button>
+            <button onClick={clickDelete} className="delete">Delete</button>
         </div>
     )
 }

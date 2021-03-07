@@ -56,28 +56,54 @@ input {
 
 .list-item {
   width: 100%;
+  height: 75px;
   display: flex;
 
   justify-content: space-between;
+  overflow: hidden;
 }
 
-.list-item > p{
-  padding: 5px;
+.content-preview {
+  opacity: .5;
 }
+
 
 .list-item:hover {
   background-color: grey;
 }
 
-.editor-container {
+
+.note-container {
   width: 100%;
+  height: 100%;
+
   display: flex;
 }
 
-.editor {
+.editor-container {
   width: 50%;
-  height: 100%;
+
+}
+
+.editor {
+  width: 100%;
+  height: 95%;
+
+  min-width: 500px;
 
   box-sizing: border-box;
-  resize: none;
+}
+
+.editor-controls{
+  height: 35px;
+}
+
+.editor-button {
+  width: 20px;
+  height: 20px;
+}
+
+
+.parsed-results {
+  max-width: 500px;
 }
