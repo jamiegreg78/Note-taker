@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
 
-export default function (props) {
+export default function SaveNotification(props) {
     return (
         <div className="save-notification">
             <p>{props.text}</p>
