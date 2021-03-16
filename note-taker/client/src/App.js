@@ -1,12 +1,17 @@
 import './App.scss';
 import { useState, useEffect } from 'react';
 import List from './Components/List';
-import Editor from './Components/Editor';
+import Editor from './Components/NoteEditor';
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBars } from '@fortawesome/free-solid-svg-icons';
+import { faCaretLeft } from '@fortawesome/free-solid-svg-icons';
 
 function App() {
   const [notes, setNotes] = useState([]);
   const [isNoteSelected, setIsNoteSelected] = useState(false);
   const [selectedNote, setSelectedNote] = useState({});
+  const [sideBarHidden, setSideBarHidden] = useState(false);
   const [loaded, setLoaded] = useState(false);
 
   // Load from local storage
@@ -66,13 +71,29 @@ function App() {
     setIsNoteSelected(false);
   }
 
-  // Saves to the state array
-  const saveNote = (noteId, content) => {
+  const growList = () => {
+    const list = document.getElementsByClassName("file-list")[0];
+    // If grown, shrink. Otherwise, grow
+    if (list.offsetWidth !== 0) {
+      list.style.width = "0%";
+      list.style.display = "none";
 
+      setSideBarHidden(true);
+    } else {
+      list.style.width = "25%";
+      list.style.display = "block";
+
+      setSideBarHidden(false);
+    }
+  }
+
+  // Saves to the state array
+  const saveNote = (noteId, title, content) => {
     // Either updates the desired object or returns the whole object unmodified
+    //console.log(noteId, title, content);
     setNotes(notes.map(item => {
       if (item.id === noteId) {
-        return { ...item, content: content }
+        return { ...item, title: title, content: content }
       } else {
         return item;
       }
@@ -84,7 +105,7 @@ function App() {
     localStorage.setItem("notes", JSON.stringify({ "notes": notes }));
   }
 
- // {isNoteSelected === true && <Editor note={selectedNote} saveNote={saveNote} />}
+  // {isNoteSelected === true && <Editor note={selectedNote} saveNote={saveNote} />}
   if (loaded === true) {
     return (
       <div className="App">
@@ -93,15 +114,33 @@ function App() {
           createNote={createNote}
           deleteNote={deleteNote}
           selectNote={selectNote} />
-        {isNoteSelected ? <Editor note={selectedNote} saveNote={saveNote} isNoteSelected={isNoteSelected}/> : null}
+        {isNoteSelected ? null : null}
+        <button id="sidebar-grow" onClick={growList}>
+          {sideBarHidden ?
+            <FontAwesomeIcon icon={faBars} size="2x" />
+            :
+            <FontAwesomeIcon icon={faCaretLeft} size="2x" />
+          }
 
+        </button>
+        {
+          isNoteSelected
+            ?
+            <Editor
+              note={selectedNote}
+              saveNote={saveNote}
+              isNoteSelected={isNoteSelected} />
+            : null
 
+        }
       </div>
     );
   }
   else {
     return (
-      <div>Loading TEMP</div>
+      <div className="loader-container">
+        <div className="loader"></div>
+      </div>
     )
   }
 
