@@ -2,7 +2,10 @@
   "name": "note-taker",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://localhost:5000/",
+  "engines": {
+    "npm": "6.14.11",
+    "node": "14.16.0"
+  },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.34",
     "@fortawesome/free-solid-svg-icons": "^5.15.2",
